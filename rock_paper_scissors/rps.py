@@ -9,31 +9,36 @@ def rock_paper_scissors(n):
     # create a base list with rock paper scisors
     rps = [['rock'], ['paper'], ['scissors']]
     # create a list with all possible scissor plays
+    all_possible = []
     # __base case__
     # if n = 0 return [[]]
     if n == 0:
         return [[]]
 
-    if n == 1:
-        return rps
     # if n = 1 return base options (rps)
     # create helper function to cause recursion and trigger possible outcomes
+    # helper needs to loop over the rps list
+    # add those to a temp list
     #
-    else:
-        base = rock_paper_scissors(n-1)
-        print(f"base = {base}")
-        all_possible = []
-        for i in range(3):
-            for j in range(len(base)):
-                all_possible = [base[j][:]]
-        for i in range(all_possible):
-            if i < len(all_possible)/3:
-                all_possible[i].insert(0, 'rock')
-            elif i < len(all_possible)*2/3:
-                all_possible[i].insert(0, 'paper')
-            else:
-                all_possible[i].insert(0, 'scissors')
-        return all_possible
+    def helper(play, round_num):
+
+        # loop the rps list
+        for i in range(len(rps)):
+            # print(play)
+            # append index of loop in rps to play and delete all in rps
+            play.append(rps[i])
+            print(play)
+        # if round_nim = n append play to all possible
+        if round_num == n:
+            all_possible.append(play[:])
+            # else call helper again with current roudn and total round + 1
+        else:
+            helper(play, round_num+1)
+        # pop the current round list
+        play.pop()
+        # call helper with empty total round and 1 as current round
+    helper([], 1)
+    return all_possible
 
 
 if __name__ == "__main__":
@@ -43,4 +48,4 @@ if __name__ == "__main__":
     else:
         print('Usage: rps.py [num_plays]')
 
-print(rock_paper_scissors(2))
+print(rock_paper_scissors(1))
